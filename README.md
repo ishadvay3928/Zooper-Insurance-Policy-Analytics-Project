@@ -1,43 +1,44 @@
 # 🚗 Zooper-Insurance-Policy-Analytics-Project
 
-A comprehensive end-to-end insurance analytics project simulating a **1,000,000-policy automobile insurance portfolio** using PostgreSQL, with analytical insights visualized through an interactive Power BI dashboard.
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-336791?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=flat&logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat)](LICENSE)
+
+A complete end-to-end automobile insurance portfolio simulation and analytics project — from data generation in PostgreSQL to interactive Power BI dashboards. Built to evaluate premium revenue, claims behavior, and portfolio risk exposure across a simulated book of **1,000,000 policies**.
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-├── Data_Simulation_and_Analytical_Queries.sql   # PostgreSQL data simulation + analytical queries
-├── Claims_Dataset.csv                           # Exported claims data (~42,900 records)
-├── policy sales dataset.zip                     # Exported policy data (~1,000,000 records)
-├── Insurance_Policy_Sales___Claims_Performance_Dashboard__2024_2026_.zip  # Power BI dashboard
-└── Insurance_Report.pdf                         # Full analytical report
+├── Data_Simulation_and_Analytical_Queries.sql   # PostgreSQL data simulation + all analytical queries
+├── Claims_Dataset.csv                           # Exported claims data (2025–2026)
+├── Policy_Sales_Dataset.zip                     # Exported policy sales data (2024)
+├── Insurance_Policy_Sales___Claims_Performance_Dashboard__2024_2026_.zip  # Power BI dashboard file (.pbix)
+└── Insurance_Report.pdf                         # Full project report with findings and methodology
 ```
 
 ---
 
-## 📋 Project Overview
+## 📌 Project Overview
 
-This project simulates a real-world automobile insurance portfolio to evaluate:
-- **Premium revenue** generated across policy tenures
-- **Claims behavior** by year, month, and tenure segment
-- **Portfolio risk exposure** including future claim liabilities
-- **Earned vs. unearned premium** recognition
+This project simulates a realistic automobile insurance dataset and performs key actuarial and business analytics on it. The workflow covers:
 
-The pipeline runs entirely in PostgreSQL for data generation and querying, with Power BI handling visualization.
+1. **Data Simulation** — Generating 1M synthetic insurance policies and claim events using PostgreSQL
+2. **Analytical Queries** — SQL queries answering six business-critical questions
+3. **Visualization** — An interactive Power BI dashboard with slicers for dynamic analysis
 
 ---
 
 ## 🗄️ Data Simulation Methodology
 
 ### Policy Sales (`policy_sales` table)
-- **1,000,000** synthetic vehicle insurance policies sold in 2024
-- Policies distributed evenly across all 366 days of 2024
-- Each policy has a unique `customer_id` and `vehicle_id`
 
-| Field | Value |
+| Attribute | Rule |
 |---|---|
-| Vehicle Value | ₹1,00,000 |
+| Policies | 1,000,000 unique customers & vehicles |
+| Policy Period | Distributed across all days of 2024 |
+| Vehicle Value | ₹1,00,000 (fixed) |
 | Premium | ₹100 × policy tenure (years) |
 | Policy Start Date | Purchase Date + 365 days |
 | Policy End Date | Start Date + Tenure |
@@ -45,7 +46,7 @@ The pipeline runs entirely in PostgreSQL for data generation and querying, with 
 **Tenure Distribution:**
 
 | Tenure | Share |
-|--------|-------|
+|---|---|
 | 1 Year | 20% |
 | 2 Years | 30% |
 | 3 Years | 40% |
@@ -55,115 +56,116 @@ The pipeline runs entirely in PostgreSQL for data generation and querying, with 
 
 **2025 Claims (Type 1)**
 - Eligible vehicles: purchased on the **7th, 14th, 21st, or 28th** of any month
-- **30%** of eligible vehicles file a claim
-- Claim date = policy start date; claim amount = ₹10,000
+- **30%** of eligible vehicles filed a claim
+- Claim date = Policy start date
+- Claim amount = ₹10,000
 
 **2026 Claims (Type 2)**
-- Eligible vehicles: **4-year tenure policies only**
-- **10%** of eligible vehicles file a claim
-- Claims distributed randomly between **Jan 1 – Feb 28, 2026**
+- Eligible policies: **4-year tenure** only
+- **10%** of eligible policies filed a claim
+- Claim period: **Jan 1 – Feb 28, 2026** (random date)
+- Claim amount = ₹10,000
 
 ---
 
-## 🔍 Analytical Queries
+## 📊 Analytical Queries
 
-The SQL file contains 6 analytical queries plus a bonus loss ratio calculation:
+The SQL file contains six analytical queries covering:
 
-| Query | Description |
-|-------|-------------|
-| **Q1** | Total premium collected during 2024 |
-| **Q2** | Monthly claim cost breakdown for 2025 and 2026 |
-| **Q3** | Claim cost-to-premium ratio by policy tenure |
-| **Q4** | Claim cost-to-premium ratio by policy purchase month |
-| **Q5** | Estimated total potential claim liability (unclaimed policies) |
-| **Q6** | Earned premium as of February 28, 2026 |
-| **Bonus** | Overall portfolio loss ratio |
+| # | Question |
+|---|---|
+| Q1 | Total premium collected during 2024 |
+| Q2 | Total claim cost per year (2025–2026) with monthly breakdown |
+| Q3 | Claim cost-to-premium ratio by policy tenure |
+| Q4 | Claim cost-to-premium ratio by policy purchase month |
+| Q5 | Estimated total potential claim liability (vehicles with no claim yet) |
+| Q6 | Earned premium as of February 28, 2026 |
+
+**Bonus:** Overall loss ratio calculation.
 
 ---
 
-## 📊 Key Results
+## 📈 Key Results
 
 | Metric | Value |
-|--------|-------|
+|---|---|
 | Total Premium Collected (2024) | ₹223.9 Million |
-| Total Claim Amount (2025–2026) | ₹429 Million |
-| Claim Loss Ratio | **1.92** |
+| Monthly Claims in 2025 | ₹31M – ₹33M |
 | Earned Premium (as of Feb 28, 2026) | ₹65.9 Million |
 | Estimated Future Claim Liability | ₹9.57 Billion |
-
-> ⚠️ A loss ratio > 1 indicates total claims exceed total premium collected — a signal for repricing or reserve adjustments.
-
----
-
-## 📈 Power BI Dashboard
-
-The `.pbix` file delivers an interactive **Insurance Policy Sales & Claims Performance Dashboard (2024–2026)** with:
-
-- **KPI Cards** — Total Claim Amount, Total Premium, Claim Loss Ratio
-- **Claims by Policy Tenure** — Bar chart comparing claim exposure across tenure segments
-- **Claim Ratio by Policy Purchase Month** — Line chart across Jan–Dec 2024
-- **Monthly Claims Trend** — Time series from Jan 2025 to Feb 2026
-- **Claim Type Distribution** — Pie chart (Type 1 vs Type 2 claims)
-
-**Interactive Slicers:** Policy Tenure · Claim Year · Claim Type · Purchase Month
+| Total Claim Amount | ₹429 Million |
+| Claim Loss Ratio | **1.92** |
 
 ---
 
-## 🗂️ Dataset: Claims_Dataset.csv
+## 📉 Dashboard
 
-Exported claims records with the following schema:
+The Power BI dashboard (`Insurance_Policy_Sales___Claims_Performance_Dashboard__2024_2026_.zip`) provides an interactive view of portfolio performance.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `claim_id` | INT | Unique claim identifier |
-| `customer_id` | INT | Customer reference |
-| `vehicle_id` | INT | Vehicle reference |
-| `claim_amount` | INT | Fixed at ₹10,000 per claim |
-| `claim_date` | DATE | Date the claim was filed |
-| `claim_type` | INT | 1 = 2025 claim, 2 = 2026 claim |
+**Visualizations included:**
+- Claims by Policy Tenure
+- Claim Ratio by Policy Purchase Month
+- Monthly Claims Trend (2025–2026)
+- Claim Type Distribution (Type 1 vs Type 2)
 
-**Total Records:** ~42,900 claims
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- PostgreSQL 13+
-- Power BI Desktop (for `.pbix` file)
-
-### Running the SQL
-```sql
--- 1. Create the database
-CREATE DATABASE zooper_assignment;
-
--- 2. Connect to the database, then run the full script
-\c zooper_assignment
-\i Data_Simulation_and_Analytical_Queries.sql
-```
-
-> ⚠️ The INSERT statements generate 1,000,000 rows using `generate_series`. Execution may take a few minutes depending on hardware.
+**Interactive Filters / Slicers:**
+- Policy Tenure
+- Claim Year
+- Claim Type
+- Purchase Month
 
 ---
 
-## 💡 Key Insights
+## 🔍 Key Insights
 
-- **3-year policies** contribute the largest share of premium income due to their 40% portfolio share
-- **Monthly claims in 2025** remain stable between ₹31M–₹33M, reflecting consistent claim patterns
-- **Claim ratios are broadly consistent** across purchase months, suggesting low seasonality in claims
-- **4-year and 1-year tenure policies** exhibit relatively higher claim exposure per premium rupee
-- The **₹9.57B potential liability** underscores the importance of actuarial reserves for long-tail exposure
+- **Longer tenure → higher premium revenue.** 3-year policies contribute the largest share of income due to their 40% portfolio weight.
+- **Monthly claim values in 2025 are stable**, indicating consistent claim occurrence patterns throughout the year.
+- **Claim ratios are balanced across purchase months**, suggesting limited seasonal impact on claims.
+- **Loss ratio of 1.92** indicates total claims significantly exceed premiums collected — highlighting the long-term risk exposure of multi-year policies.
+- **₹9.57B in potential future liability** underscores the importance of actuarial reserves and risk management.
 
 ---
 
 ## 🛠️ Tech Stack
 
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=flat&logo=postgresql&logoColor=white)
-![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat&logo=powerbi&logoColor=black)
-![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=mysql&logoColor=white)
+- **Database:** PostgreSQL 15+
+- **Visualization:** Microsoft Power BI
+- **Language:** SQL (PostgreSQL dialect)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Set up the database
+
+```sql
+CREATE DATABASE zooper_assignment;
+```
+
+### 2. Run the simulation & queries
+
+Connect to `zooper_assignment` and execute `Data_Simulation_and_Analytical_Queries.sql` in order:
+
+```bash
+psql -U <your_user> -d zooper_assignment -f Data_Simulation_and_Analytical_Queries.sql
+```
+
+> ⚠️ Generating 1,000,000 rows may take a few minutes depending on your hardware.
+
+### 3. Open the Dashboard
+
+1. Unzip `Insurance_Policy_Sales___Claims_Performance_Dashboard__2024_2026_.zip`
+2. Open the `.pbix` file in **Power BI Desktop**
+3. Refresh the data source if prompted
 
 ---
 
 ## 📄 Report
 
-A full written analysis is available in [`Insurance_Report.pdf`](./Insurance_Report.pdf), covering the simulation methodology, analytical framework, dashboard overview, and business insights.
+See `Insurance_Report.pdf` for the complete write-up including methodology, findings, and dashboard screenshots.
+
+---
+
+## 📬 Contact
+
+Feel free to open an issue or reach out if you have questions about the simulation logic or analytical approach.

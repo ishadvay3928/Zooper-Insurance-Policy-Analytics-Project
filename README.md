@@ -168,4 +168,11 @@ See `Insurance_Report.pdf` for the complete write-up including methodology, find
 
 ## 📬 Contact
 
-Feel free to open an issue or reach out if you have questions about the simulation logic or analytical approach.
+👩‍💻 **Isha Chaudhary**
+
+📧 [ishachaudhary3928@gmail.com](mailto:ishachaudhary3928@gmail.com)
+
+🔗 [LinkedIn](https://linkedin.com)
+
+📍 Noida, India
+
